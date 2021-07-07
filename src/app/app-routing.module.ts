@@ -9,6 +9,7 @@ import { UserDetailsComponent } from './components/user-details/user-details.com
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent},
   { path: 'login', component: LoginComponent},
+  { path: '', redirectTo: '/login', pathMatch: 'full'},
   { path: 'users', component: UsersComponent},
   { path: 'my-page', component: MyPageComponent},
   { path: 'users/{user-id}', component: UserDetailsComponent},
