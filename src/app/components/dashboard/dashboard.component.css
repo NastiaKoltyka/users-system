@@ -1,0 +1,11 @@
+h2{
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 30px;
+}
+.content{
+    width: 80%;
+    margin: auto;
+    min-height: calc(100vh - 100px);
+    padding-top: 20px;
+}
