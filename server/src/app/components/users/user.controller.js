@@ -1,16 +1,9 @@
 const userService = require('./user.service');
 
 const getAllUsers = (req, res) => {
-    return userService.getAllUsers()
-        .then(users => {
-            const result = users.map(user => {
-                const {id,name, email, password, created_at,updated_at} = user;
-                return { id, name, email, password, created_at,updated_at};
-            });
-
-            return res.status(200).json({
-                data: result
-            });
+    return userService.getAllUsers(req.query.page, req.query.pageSize)
+        .then(result => {
+            return res.status(200).json(result);
         })
         .catch(error => res.status(500).json({
             code: '500',
