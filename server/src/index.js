@@ -1,5 +1,6 @@
 const express = require('express');
 const mySql = require('mysql2');
+const cors = require('cors');
 require('./app/components/shared/models');
 const bodyParser = require('body-parser');
 
@@ -7,6 +8,7 @@ const routing = require('./app/routes');
 const config = require('./config/app');
 
 const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 app.use('/api/v1', routing());
 
