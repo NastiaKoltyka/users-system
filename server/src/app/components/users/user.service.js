@@ -2,21 +2,24 @@ const User = require('../shared/models/user');
 
 const getAllUsers = (page, pageSize) => {
     return User.getAll().then(result => {
-        let allUsers = result.map(user => {
-            const {id,name, email, password, created_at,updated_at} = user;
-            return { id, name, email, password, created_at,updated_at};
-        });
-
-        let users = allUsers.slice(pageSize*page, pageSize*(page+1));
-        return {
-            data: users,
-            pagination: {
-                page: page,
-                pageSize: pageSize,
-                rowCount: users.length,
-                pageCount:  Math.ceil(allUsers.length / pageSize),
-            }
-        };
+        try {
+            let allUsers = result.map(user => {
+                const {id,name, email, password, created_at,updated_at} = user;
+                return { id, name, email, password, created_at,updated_at};
+            });
+            let users = allUsers.slice(pageSize*page, pageSize*(page+1));
+            return {
+                data: users,
+                pagination: {
+                    page: page,
+                    pageSize: pageSize,
+                    rowCount: users.length,
+                    pageCount:  Math.ceil(allUsers.length / pageSize),
+                }
+            };
+        } catch (err){
+            return Promise.reject(err);
+        }
     }); 
 };
 
