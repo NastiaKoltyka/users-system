@@ -1,11 +1,11 @@
-  <div class="header"> User management</div>
-  <div class="container">
-    <div class="sideBar" *ngIf="router.url!=='/login'">
-      <div [routerLink]="'/my-page'"> My page</div>
-      <div [routerLink]="'/dashboard'">Dashboard</div>
-      <div [routerLink]="'/users'">Users</div>
-      <div [routerLink]="'/login'">LogOut</div>
-    </div>
-    <router-outlet></router-outlet>
+<div class="header"> User management</div>
+<div class="container">
+  <div class="sideBar" *ngIf="router.url!=='/login'">
+    <div [routerLink]="'/my-page'"> My page</div>
+    <div [routerLink]="'/dashboard'">Dashboard</div>
+    <div [routerLink]="'/users'">Users</div>
+    <div [routerLink]="'/login'">LogOut</div>
   </div>
-  <div class="footer"> Сopyright © User management. All rights reserved.</div>
+  <router-outlet></router-outlet>
+</div>
+<div class="footer"> Сopyright © User management. All rights reserved.</div>
