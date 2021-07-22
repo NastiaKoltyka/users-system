@@ -1,3 +1,32 @@
 <div class="user-content">
-  <div>users works!</div>
+  <form #form="ngForm">
+    <label for="name">Name:</label>
+    <input type="text" name="name" id="name" required pattern="^[A-Za-z]{1,}" #name="ngModel" class="form-control" ngModel>
+    <label for="email">Email:</label>
+    <input type="email" name="email" id="email"  pattern="[A-Za-z0-9\.%№\$\-#]{1,}@[A-Za-z0-9]{1,}\.[A-Za-z0-9]{1,}"
+    #mail="ngModel" class="form-control" required ngModel>
+    <label for="password">Password:</label>
+    <input type="password" name="password" id="password" required
+    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{4,}$" class="form-control" ngModel #password="ngModel">
+    <button type="submit">Add</button>
+  </form>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Created at</th>
+        <th>Updated at</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{user.name}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.created_at | date:'dd.MM.yyyy hh:mm'}}</td>
+        <td>{{user.updated_at | date:'dd.MM.yyyy hh:mm'}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="page">Page {{page + 1}} of {{pageCount}}</div>
 </div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 
 import { HttpService } from '..//../http.sevice';
@@ -13,11 +14,14 @@ import { UserList } from 'src/app/classes/user-list';
 })
 export class UsersComponent implements OnInit {
   users: User[] = [];
-  page = 1;
-  pageSize =10;
+  page: number = 0;
+  pageSize: number = 10;
+  pageCount: number = 0;
   constructor(private httpService: HttpService) { 
-    this.httpService.getUser(5).subscribe((data: User) => console.log(data));
-    this.httpService.getAllUsers(0, 100).subscribe((data: UserList) => console.log(data));
+    this.httpService.getAllUsers(this.page, this.pageSize).subscribe((data: UserList) => {
+      this.users = data.data;
+      this.pageCount = data.pagination.pageCount;
+    });
   }
 
   ngOnInit(): void {

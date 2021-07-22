@@ -12,7 +12,7 @@ import { HttpClientModule }   from '@angular/common/http';
   imports: [
     BrowserModule,
     CoreModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

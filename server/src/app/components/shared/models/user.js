@@ -30,6 +30,7 @@ const getAll = () => {
     .then(connection => {
       return connection.query("SELECT * FROM users")
         .then(result => {
+          connection.close()
           return result[0];
         });
     })
@@ -40,6 +41,7 @@ const getUser = (userId) => {
       const selectSql = 'SELECT * FROM users WHERE id=?'
       return connection.query(selectSql, [userId])
         .then(selectedResult => {
+          connection.close()
           return selectedResult[0][0];
         })
     });
@@ -55,6 +57,7 @@ const createUser = (user) => {
           const selectSql = 'SELECT * FROM users WHERE id=?'
           return connection.query(selectSql, [result[0].insertId])
             .then(selectedResult => {
+              connection.close()
               return selectedResult[0][0];
             })
         })
@@ -71,6 +74,7 @@ const updateUser = (userId, user) => {
           const selectSql = 'SELECT * FROM users WHERE id=?'
           return connection.query(selectSql, [userId])
             .then(selectedResult => {
+              connection.close()
               return selectedResult[0][0];
             })
         });
@@ -84,6 +88,7 @@ const deleteUser = (userId) => {
       const data = [userId]
       return connection.query(sql, data)
         .then(result => {
+          connection.close()
           return result[0].affectedRows;
         })
     });

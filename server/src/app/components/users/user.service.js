@@ -7,7 +7,15 @@ const getAllUsers = (page, pageSize) => {
                 const {id,name, email, password, created_at,updated_at} = user;
                 return { id, name, email, password, created_at,updated_at};
             });
-            let users = allUsers.slice(pageSize*page, pageSize*(page+1));
+            let users = allUsers.sort(function (a, b) {
+                if (a.name.toLowerCase()< b.name.toLowerCase()) {
+                  return -1;
+                }
+                if (a.name > b.name) {
+                  return 1;
+                }
+                return 0;
+              }).slice(pageSize*page, pageSize*(page+1));
             return {
                 data: users,
                 pagination: {

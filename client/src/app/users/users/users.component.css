@@ -1,6 +1,17 @@
 .user-content{
-    width: 500px;
-    margin-left: 50px;
     min-height: calc(100vh - 100px);
     padding-top: 20px;
+    width: calc(100vw - 200px);
+}
+.table{
+    width: 700px;
+    margin: auto;
+    height: 700px;
+    margin-top: 20px;
+    text-align: center;
+    font-size: 17px;
+}
+.page{
+    text-align: center;
+    margin-top: 50px;
 }
