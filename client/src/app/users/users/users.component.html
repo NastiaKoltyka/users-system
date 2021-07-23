@@ -1,13 +1,13 @@
 <div class="user-content">
-  <form #form="ngForm">
+  <form #form="ngForm"(ngSubmit)="onSubmit(form)">
     <label for="name">Name:</label>
     <input type="text" name="name" id="name" required pattern="^[A-Za-z]{1,}" #name="ngModel" class="form-control" ngModel>
     <label for="email">Email:</label>
     <input type="email" name="email" id="email"  pattern="[A-Za-z0-9\.%№\$\-#]{1,}@[A-Za-z0-9]{1,}\.[A-Za-z0-9]{1,}"
     #mail="ngModel" class="form-control" required ngModel>
     <label for="password">Password:</label>
-    <input type="password" name="password" id="password" required
-    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{4,}$" class="form-control" ngModel #password="ngModel">
+    <input type="password" name="password" id="password" pattern="^[A-Za-z]{1,}"  required
+    X class="form-control" ngModel #password="ngModel">
     <button type="submit">Add</button>
   </form>
   <table class="table table-bordered">

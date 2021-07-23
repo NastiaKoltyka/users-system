@@ -18,13 +18,29 @@ export class UsersComponent implements OnInit {
   pageSize: number = 10;
   pageCount: number = 0;
   constructor(private httpService: HttpService) { 
+    this.refreshUsers()
+  }
+
+  ngOnInit(): void {
+  }
+  refreshUsers():void{
     this.httpService.getAllUsers(this.page, this.pageSize).subscribe((data: UserList) => {
       this.users = data.data;
       this.pageCount = data.pagination.pageCount;
     });
   }
+  onSubmit(form: NgForm) {
 
-  ngOnInit(): void {
+    if (form.valid) {
+      console.log('domeldmoe')
+      let user:User =new User(form.value.name, form.value.email, form.value.password);
+      this.httpService.createUser(user).subscribe(() => {
+        console.log('Success!');
+        this.refreshUsers()
+      },
+      error => {
+        console.log(error);
+      });
+    }
   }
-
 }
