@@ -1,14 +1,17 @@
 <div class="user-content">
   <form #form="ngForm"(ngSubmit)="onSubmit(form)">
     <label for="name">Name:</label>
-    <input type="text" name="name" id="name" required pattern="^[A-Za-z]{1,}" #name="ngModel" class="form-control" ngModel>
+    <input type="text" name="name" id="name" required pattern="^[A-Za-z]{1,}" #name="ngModel" class="form-control" ngModel  #nameStatus="ngModel">
+    <div *ngIf="name.invalid && name.dirty" class="invalid-tooltip">Use latin letters only</div>
     <label for="email">Email:</label>
     <input type="email" name="email" id="email"  pattern="[A-Za-z0-9\.%№\$\-#]{1,}@[A-Za-z0-9]{1,}\.[A-Za-z0-9]{1,}"
-    #mail="ngModel" class="form-control" required ngModel>
+    #mail="ngModel" class="form-control" required ngModel #emailStatus="ngModel">
+    <div *ngIf="mail.invalid && mail.dirty" class="invalid-tooltip">Wrong email adress</div>
     <label for="password">Password:</label>
     <input type="password" name="password" id="password" pattern="^[A-Za-z]{1,}"  required
-    X class="form-control" ngModel #password="ngModel">
-    <button type="submit">Add</button>
+    X class="form-control" ngModel #password="ngModel" #passwordStatus="ngModel">
+    <div *ngIf="password.invalid && password.dirty" class="invalid-tooltip">Use latin letters only</div>
+    <button type="submit"   [disabled]="nameStatus.pristine || emailStatus.pristine || passwordStatus.pristine" class="btn btn-success">Add</button>
   </form>
   <table class="table table-bordered">
     <thead>

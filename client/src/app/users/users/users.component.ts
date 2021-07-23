@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 
 import { HttpService } from '..//../http.sevice';
 import { User } from '../../classes/user';
 import { UserList } from 'src/app/classes/user-list';
+
+
 
 @Component({
   selector: 'app-users',
@@ -17,30 +20,35 @@ export class UsersComponent implements OnInit {
   page: number = 0;
   pageSize: number = 10;
   pageCount: number = 0;
-  constructor(private httpService: HttpService) { 
+  constructor(private httpService: HttpService, private toastr: ToastrService) {
     this.refreshUsers()
   }
 
   ngOnInit(): void {
   }
-  refreshUsers():void{
+  refreshUsers(): void {
     this.httpService.getAllUsers(this.page, this.pageSize).subscribe((data: UserList) => {
       this.users = data.data;
       this.pageCount = data.pagination.pageCount;
+      this.toastr.success(`Page ${this.page+1} loaded`, 'Success!');
+
+    }, error => {
+      this.toastr.error(error.message, 'Error!');
     });
   }
   onSubmit(form: NgForm) {
 
     if (form.valid) {
-      console.log('domeldmoe')
-      let user:User =new User(form.value.name, form.value.email, form.value.password);
+      let user: User = new User(form.value.name, form.value.email, form.value.password);
       this.httpService.createUser(user).subscribe(() => {
         console.log('Success!');
-        this.refreshUsers()
+        this.refreshUsers();
+        this.toastr.success('User added successfully', 'Success!');
       },
-      error => {
-        console.log(error);
-      });
+        error => {
+          this.toastr.error(error.message, 'Error!');
+        });
     }
+
   }
 }
