@@ -15,13 +15,13 @@ const getAllUsers = (page, pageSize) => {
                   return 1;
                 }
                 return 0;
-              }).slice(pageSize*page, pageSize*(page+1));
+              }).slice(pageSize*(page-1), pageSize*page);
             return {
                 data: users,
                 pagination: {
                     page: page,
                     pageSize: pageSize,
-                    rowCount: users.length,
+                    rowCount: allUsers.length,
                     pageCount:  Math.ceil(allUsers.length / pageSize),
                 }
             };

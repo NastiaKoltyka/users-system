@@ -1,15 +1,18 @@
 .user-content{
     min-height: calc(100vh - 100px);
     padding-top: 20px;
-    width: calc(100vw - 200px);
+    width: calc(100vw - 220px);
 }
 .table{
     width: 700px;
     margin: auto;
-    height: 700px;
-    margin-top: 20px;
+    max-height: 700px;
+    margin-top: 10px;
     text-align: center;
     font-size: 17px;
+}
+.table td{
+  height: 65px;
 }
 .page{
     text-align: center;
@@ -34,9 +37,16 @@ input[type="email"].ng-invalid.ng-dirty {
 }
 form{
     display: flex;
-    justify-content: space-around;
+    margin: auto;
+    max-width: 1250px;
 }
 .form-control{
     width: 400px;
 }
-
+.btn{
+  height: 38px;
+  margin-top: 24px;
+}
+form div{
+  margin-right: 20px;
+}

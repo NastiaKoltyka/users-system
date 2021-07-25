@@ -17,9 +17,11 @@ import { UserList } from 'src/app/classes/user-list';
 })
 export class UsersComponent implements OnInit {
   users: User[] = [];
-  page: number = 0;
+  page: number = 1;
   pageSize: number = 10;
   pageCount: number = 0;
+  collectionSize: number = 0;
+  
   constructor(private httpService: HttpService, private toastr: ToastrService) {
     this.refreshUsers()
   }
@@ -30,14 +32,14 @@ export class UsersComponent implements OnInit {
     this.httpService.getAllUsers(this.page, this.pageSize).subscribe((data: UserList) => {
       this.users = data.data;
       this.pageCount = data.pagination.pageCount;
-      this.toastr.success(`Page ${this.page+1} loaded`, 'Success!');
+      this.collectionSize = data.pagination.rowCount;
+      this.toastr.success(`Page ${this.page} loaded`, 'Success!');
 
     }, error => {
       this.toastr.error(error.message, 'Error!');
     });
   }
   onSubmit(form: NgForm) {
-
     if (form.valid) {
       let user: User = new User(form.value.name, form.value.email, form.value.password);
       this.httpService.createUser(user).subscribe(() => {
@@ -49,6 +51,10 @@ export class UsersComponent implements OnInit {
           this.toastr.error(error.message, 'Error!');
         });
     }
-
+  }
+  loadPage(newPage: number) {
+      this.page = newPage;
+      console.log(`Refresh users: ${this.page}`)
+      this.refreshUsers();
   }
 }
