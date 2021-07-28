@@ -7,11 +7,9 @@ const passport = require('passport');
 
 module.exports = () => {
     
-    /* POST login. */
     router.post('/login', function (req, res, next) {
 
         passport.authenticate('local', { session: false }, (err, user, info) => {
-            console.log(user);
             if (err || !user) {
                 return res.status(400).json({
                     message: info ? info.message : 'Login failed',

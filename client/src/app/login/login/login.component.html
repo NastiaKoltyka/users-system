@@ -1,8 +1,10 @@
   <div class="container">
     <h1>Login</h1>
-    <label for="login">Please write the login:</label>
-    <input type="text" name="" id="login">
-    <label for="password">Please write the password:</label>
-    <input type="password" name="" id="password">
-    <button [routerLink]="'/dashboard'">LogIn</button>
+    <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+      <label for="login">Please write the login:</label>
+      <input type="text" name="login" id="login"  ngModel>
+      <label for="password">Please write the password:</label>
+      <input type="password" name="password" id="password"  ngModel>
+      <button type="submit" >LogIn</button>
+    </form>
   </div>
