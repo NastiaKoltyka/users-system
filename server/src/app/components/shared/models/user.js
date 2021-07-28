@@ -1,5 +1,5 @@
 const mysql = require('mysql2');
-const config = require('../../../../config/app')
+const config = require('../../../../config/app');
 
 const getConnection = () => {
   const connection = mysql.createConnection({

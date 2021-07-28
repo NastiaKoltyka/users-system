@@ -1,11 +1,14 @@
 const express = require('express');
 const mySql = require('mysql2');
 const cors = require('cors');
+const passport  = require('passport');
 require('./app/components/shared/models');
 const bodyParser = require('body-parser');
 
 const routing = require('./app/routes');
 const config = require('./config/app');
+require('./app/auth/passport');
+
 
 const app = express();
 app.use(cors());
