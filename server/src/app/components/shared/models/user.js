@@ -10,18 +10,28 @@ const getConnection = () => {
     password: config.password
   }).promise();
 
-  const sql = `create table if not exists users(
+  const createTable = `create table if not exists users(
       id int primary key auto_increment,
       name varchar(255) not null,
       email varchar(255) not null,
       password varchar(255) not null,
       created_at datetime not null,
-      updated_at datetime not null
-    )`;
+      updated_at datetime not null,
+      is_admin BOOLEAN not null
+    );
+  `;
+  const createAdmin = `INSERT INTO users (name, email, password, created_at,updated_at,is_admin )
+  SELECT * FROM (SELECT 'admin' as name, 'admin@gmail.com' as email, 'admin' as password, now() as created_ay, now() as updated_at, true as is_admon)
+  as temp
+  WHERE NOT EXISTS (SELECT name FROM users WHERE name = 'admin') LIMIT 1;`;
+    
 
-  return connection.query(sql)
+  return connection.query(createTable)
     .then(result => {
-      return connection;
+      return connection.query(createAdmin)
+      .then(result2 => {
+        return connection;
+      });
     });
 }
 
@@ -51,8 +61,8 @@ const getUser = (userId) => {
 const createUser = (user) => {
   return getConnection()
     .then(connection => {
-      const sql = `INSERT INTO users(name, email, password, created_at,updated_at) VALUES (?,?,?,?,?)`;
-      return connection.query(sql, [user.name, user.email, user.password, user.created_at, user.updated_at])
+      const sql = `INSERT INTO users(name, email, password, created_at,updated_at,is_admin ) VALUES (?,?,?,?,?,?)`;
+      return connection.query(sql, [user.name, user.email, user.password, user.created_at, user.updated_at, false])
         .then(result => {
           const selectSql = 'SELECT * FROM users WHERE id=?'
           return connection.query(selectSql, [result[0].insertId])

@@ -4,38 +4,63 @@ const getAllUsers = (page, pageSize) => {
     return User.getAll().then(result => {
         try {
             let allUsers = result.map(user => {
-                const {id,name, email, password, created_at,updated_at} = user;
-                return { id, name, email, password, created_at,updated_at};
+                const {
+                    id,
+                    name,
+                    email,
+                    password,
+                    created_at,
+                    updated_at,
+                    is_admin,
+                } = user;
+                return {
+                    id,
+                    name,
+                    email,
+                    password,
+                    created_at,
+                    updated_at,
+                    is_admin,
+                };
             });
             let users = allUsers.sort(function (a, b) {
-                if (a.name.toLowerCase()< b.name.toLowerCase()) {
-                  return -1;
+                if (a.name.toLowerCase() < b.name.toLowerCase()) {
+                    return -1;
                 }
                 if (a.name > b.name) {
-                  return 1;
+                    return 1;
                 }
                 return 0;
-              }).slice(pageSize*(page-1), pageSize*page);
+            }).slice(pageSize * (page - 1), pageSize * page);
             return {
                 data: users,
                 pagination: {
                     page: page,
                     pageSize: pageSize,
                     rowCount: allUsers.length,
-                    pageCount:  Math.ceil(allUsers.length / pageSize),
+                    pageCount: Math.ceil(allUsers.length / pageSize),
                 }
             };
-        } catch (err){
+        } catch (err) {
             return Promise.reject(err);
         }
-    }); 
+    });
 };
 
 const userValidation = (newUser) => {
-    const {name, email, password} = newUser;
-    const user = { name: name, email: email, password: password};
-    for(let prop in user) {
-        if (user.hasOwnProperty(prop) && user[prop] === undefined){
+    const {
+        name,
+        email,
+        password
+    } = newUser;
+    const user = {
+        name: name,
+        email: email,
+        password: password
+    };
+    
+    for (let prop in user) {
+        if (user.hasOwnProperty(prop) && user[prop] === undefined) {
             return false;
         }
     }
@@ -51,16 +76,27 @@ const createUser = (newUser) => {
     if (!validation) {
         return Promise.reject();
     }
-    const user = { name: newUser.name, email: newUser.email, password: newUser.password, created_at: new Date, updated_at: new Date };
+    const user = {
+        name: newUser.name,
+        email: newUser.email,
+        password: newUser.password,
+        created_at: new Date,
+        updated_at: new Date,
+    };
     return User.createUser(user);
 };
 
-const updateUser = (userId,user) => {
+const updateUser = (userId, user) => {
     const validation = userValidation(user);
     if (!validation) {
         return Promise.reject();
     }
-    const updatedUser = { name: user.name, email: user.email, password: user.password, updated_at: new Date };
+    const updatedUser = {
+        name: user.name,
+        email: user.email,
+        password: user.password,
+        updated_at: new Date
+    };
     return User.updateUser(userId, updatedUser);
 };
 

@@ -23,7 +23,8 @@ passport.use(new LocalStrategy({
                         email,
                         password,
                         created_at,
-                        updated_at
+                        updated_at,
+                        is_admin,
                     } = element;
                     let user = {
                         id,
@@ -31,17 +32,17 @@ passport.use(new LocalStrategy({
                         email,
                         password,
                         created_at,
-                        updated_at
+                        updated_at,
+                        is_admin,
                     };
                     return done(null, user, {
                         message: 'Logged In Successfully'
                     });
-                } else {
-                    return done(null, false, {
-                        message: 'Incorrect email or password.'
-                    });
                 }
             }
+            return done(null, false, {
+                message: 'Incorrect email or password.'
+            });
         } catch (err) {
             return done(err);
         }
@@ -62,7 +63,8 @@ passport.use(new JWTStrategy({
                         email,
                         password,
                         created_at,
-                        updated_at
+                        updated_at,
+                        is_admin,
                     } = element;
                     let user = {
                         id,
@@ -70,13 +72,13 @@ passport.use(new JWTStrategy({
                         email,
                         password,
                         created_at,
-                        updated_at
+                        updated_at,
+                        is_admin,
                     };
                     return done(null, user);
-                } else {
-                    return done(null, false);
                 }
             }
+            return done(null, false);
         } catch (err) {
             return done(err);
         }
