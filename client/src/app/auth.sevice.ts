@@ -9,17 +9,17 @@ import { Credentials } from './classes/credentials';
 export class AuthService {
     token: string;
     host: string = 'http://127.0.0.1:3000/api/v1/auth';
-    constructor(private http: HttpClient) { 
-        this.token='';
+    constructor(private http: HttpClient) {
+        this.token = localStorage.getItem('token') ?? '';
     }
 
-    loginUser(user: Credentials):Promise<void> {
+    loginUser(user: Credentials): Promise<void> {
         return this.http.post(`${this.host}/login`, user)
-        .toPromise()
-        .then((data:any) => {
-            this.token = data.token;
-            console.log(`Token: ${this.token}`);
-        });
+            .toPromise()
+            .then((data: any) => {
+                this.token = data.token;
+                localStorage.setItem('token', this.token);
+            });
     }
 
 }
