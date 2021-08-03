@@ -42,7 +42,7 @@ const getAllUsers = (page, pageSize) => {
                 }
             };
         } catch (err) {
-            return Promise.reject(err);
+            throw new Error(`Error getting all users. ${err.message}`);
         }
     });
 };
@@ -58,7 +58,7 @@ const userValidation = (newUser) => {
         email: email,
         password: password
     };
-    
+
     for (let prop in user) {
         if (user.hasOwnProperty(prop) && user[prop] === undefined) {
             return false;
@@ -72,32 +72,41 @@ const getUser = (userId) => {
 };
 
 const createUser = (newUser) => {
-    const validation = userValidation(newUser);
-    if (!validation) {
-        return Promise.reject();
+    try {
+        const validation = userValidation(newUser);
+        if (!validation) {
+            return Promise.reject();
+        }
+        const user = {
+            name: newUser.name,
+            email: newUser.email,
+            password: newUser.password,
+            created_at: new Date,
+            updated_at: new Date,
+        };
+        return User.createUser(user);
+
+    } catch (err) {
+        throw new Error(`Error creating user. ${err.message}`);
     }
-    const user = {
-        name: newUser.name,
-        email: newUser.email,
-        password: newUser.password,
-        created_at: new Date,
-        updated_at: new Date,
-    };
-    return User.createUser(user);
 };
 
 const updateUser = (userId, user) => {
-    const validation = userValidation(user);
-    if (!validation) {
-        return Promise.reject();
+    try {
+        const validation = userValidation(user);
+        if (!validation) {
+            return Promise.reject();
+        }
+        const updatedUser = {
+            name: user.name,
+            email: user.email,
+            password: user.password,
+            updated_at: new Date
+        };
+        return User.updateUser(userId, updatedUser);
+    } catch (err) {
+        throw new Error(`Error updating user. ${err.message}`);
     }
-    const updatedUser = {
-        name: user.name,
-        email: user.email,
-        password: user.password,
-        updated_at: new Date
-    };
-    return User.updateUser(userId, updatedUser);
 };
 
 const removeUser = (userId) => {

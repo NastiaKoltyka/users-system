@@ -43,7 +43,9 @@ const getAll = () => {
           connection.close()
           return result[0];
         });
-    })
+    }).catch(err => {
+      throw new Error(`Error getting users from the database. ${err.message}`);
+    });
 };
 const getUser = (userId) => {
   return getConnection()
@@ -54,8 +56,9 @@ const getUser = (userId) => {
           connection.close()
           return selectedResult[0][0];
         })
+    }).catch(err => {
+      throw new Error(`Error getting user by id from the database. ${err.message}`);
     });
-
 }
 
 const createUser = (user) => {
@@ -71,6 +74,8 @@ const createUser = (user) => {
               return selectedResult[0][0];
             })
         })
+    }).catch(err => {
+      throw new Error(`Error creating user in the database. ${err.message}`);
     });
 }
 
@@ -88,6 +93,8 @@ const updateUser = (userId, user) => {
               return selectedResult[0][0];
             })
         });
+    }).catch(err => {
+      throw new Error(`Error updating user in the database. ${err.message}`);
     });
 }
 
@@ -101,6 +108,8 @@ const deleteUser = (userId) => {
           connection.close()
           return result[0].affectedRows;
         })
+    }).catch(err => {
+      throw new Error(`Error deleting user in the database. ${err.message}`);
     });
 }
 
