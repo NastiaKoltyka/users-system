@@ -15,23 +15,35 @@ const getConnection = () => {
       name varchar(255) not null,
       email varchar(255) not null,
       password varchar(255) not null,
+      phone int(255),
+      date_of_birth varchar(255),
+      about_me varchar(255),
       created_at datetime not null,
       updated_at datetime not null,
-      is_admin BOOLEAN not null
-    );
+      is_admin BOOLEAN not null)
   `;
-  const createAdmin = `INSERT INTO users (name, email, password, created_at,updated_at,is_admin )
-  SELECT * FROM (SELECT 'admin' as name, 'admin@gmail.com' as email, 'admin' as password, now() as created_ay, now() as updated_at, true as is_admon)
+  const createRoles = `create table if not exists userRoles(
+    id int primary key auto_increment,
+    role varchar(100) not null,
+    user_id int,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+  );`
+
+  const createAdmin = `INSERT INTO users (name, email, password, phone, date_of_birth, about_me, created_at,updated_at,is_admin )
+  SELECT * FROM (SELECT 'admin' as name, 'admin@gmail.com' as email, 'admin' as password, 5555555 as phone, '12/12/12' as date_of_birth, 'I am admin' as about_me, now() as created_at,  now() as updated_at, true as is_admin)
   as temp
   WHERE NOT EXISTS (SELECT name FROM users WHERE name = 'admin') LIMIT 1;`;
-    
+
 
   return connection.query(createTable)
     .then(result => {
-      return connection.query(createAdmin)
-      .then(result2 => {
-        return connection;
-      });
+      return connection.query(createRoles)
+        .then(result1 => {
+          return connection.query(createAdmin)
+            .then(result3 => {
+              return connection;
+            });
+        });
     });
 }
 
