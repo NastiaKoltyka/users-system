@@ -28,6 +28,7 @@ passport.use(new LocalStrategy({
                         created_at,
                         updated_at,
                         is_admin,
+                        roles,
                     } = element;
                     let user = {
                         id,
@@ -40,6 +41,7 @@ passport.use(new LocalStrategy({
                         created_at,
                         updated_at,
                         is_admin,
+                        roles,
                     };
                     return done(null, user, {
                         message: 'Logged In Successfully'
@@ -74,6 +76,7 @@ passport.use(new JWTStrategy({
                         created_at,
                         updated_at,
                         is_admin,
+                        roles,
                     } = element;
                     let user = {
                         id,
@@ -86,6 +89,7 @@ passport.use(new JWTStrategy({
                         created_at,
                         updated_at,
                         is_admin,
+                        roles,
                     };
                     return done(null, user);
                 }

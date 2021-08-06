@@ -15,6 +15,7 @@ const getAllUsers = (page, pageSize) => {
                     created_at,
                     updated_at,
                     is_admin,
+                    roles
                 } = user;
                 return {
                     id,
@@ -27,6 +28,7 @@ const getAllUsers = (page, pageSize) => {
                     created_at,
                     updated_at,
                     is_admin,
+                    roles
                 };
             });
             let users = allUsers.sort(function (a, b) {
@@ -89,6 +91,7 @@ const createUser = (newUser) => {
             password: newUser.password,
             created_at: new Date,
             updated_at: new Date,
+            roles: ['can_view_users']
         };
         return User.createUser(user);
 
@@ -107,6 +110,10 @@ const updateUser = (userId, user) => {
             name: user.name,
             email: user.email,
             password: user.password,
+            phone: user.phone, 
+            date_of_birth: user.date_of_birth,
+            about_me: user.about_me,
+            roles: user.roles,
             updated_at: new Date
         };
         return User.updateUser(userId, updatedUser);

@@ -46,15 +46,13 @@ const createUser = (req, res) => {
 
 const updateUser = (req, res) => {
     return userService.updateUser(req.params.id, req.body)
-        .then(user => {
-            if (!user) {
-                return res.status(404).json({
-                    code: '404',
-                    description: 'There is no such user!'
-                });
-            } else {
-                return res.status(200).json();
-            }
+        .then(() => {
+            return res.status(200).json();
+        }, () => {
+            return res.status(404).json({
+                code: '404',
+                description: 'There is no such user!'
+            });
         })
         .catch(error => res.status(500).json({
             code: '500',
