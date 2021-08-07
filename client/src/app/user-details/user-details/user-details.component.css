@@ -4,3 +4,15 @@
   min-height: calc(100vh - 100px);
   padding-top: 20px;
 }
+
+.buttons {
+  width: 200px;
+  margin-top: 50px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn {
+  width: 90px;
+  height: 50px;
+}

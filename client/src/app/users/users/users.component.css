@@ -13,6 +13,7 @@
 }
 .table td{
   height: 65px;
+  cursor: pointer;
 }
 .page{
     text-align: center;

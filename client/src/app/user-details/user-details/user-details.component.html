@@ -1,3 +1,17 @@
 <div class="user-details-content">
-  <p>{{user|json}}</p>
+  <p><b>Name:</b> {{user.name}}</p>
+  <p><b>Email:</b> {{user.email}}</p>
+  <p><b>Password:</b> {{user.password}}</p>
+  <p><b>Phone:</b> {{user.phone}}</p>
+  <p><b>Date of birth:</b> {{user.date_of_birth}}</p>
+  <p><b>About me:</b> {{user.about_me}}</p>
+  <p><b>User created at:</b> {{user.created_at | date:'dd.MM.yyyy hh:mm'}}</p>
+  <p><b>User updated at:</b> {{user.updated_at | date:'dd.MM.yyyy hh:mm'}}</p>
+  <p><b>Roles:</b> {{user.roles.join(', ')}}</p>
+  <div class="buttons">
+    <button class="btn btn-warning" (click)="editUser()">Edit</button>
+    <button class="btn btn-dark" (click)="deleteUser()">Delete</button>
+  </div>
 </div>
+
+

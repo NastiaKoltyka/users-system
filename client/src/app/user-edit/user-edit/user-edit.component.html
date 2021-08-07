@@ -1,0 +1,63 @@
+<div class="user-details-content">
+  <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+    <div>
+      <label for="name">Name:</label>
+      <input type="text" name="name" id="name" required pattern="^[A-Za-z]{1,}" #name="ngModel" class="form-control"
+        ngModel #nameStatus="ngModel" value="{{user.name}}">
+      <div *ngIf="name.invalid && name.dirty" class="invalid-tooltip">Use latin letters only</div>
+    </div>
+    <div>
+      <label for="email">Email:</label>
+      <input type="email" name="email" id="email" pattern="[A-Za-z0-9\.%№\$\-#]{1,}@[A-Za-z0-9]{1,}\.[A-Za-z0-9]{1,}"
+        #mail="ngModel" class="form-control" required ngModel #emailStatus="ngModel" value="{{user.email}}">
+      <div *ngIf="mail.invalid && mail.dirty" class="invalid-tooltip">Wrong email adress</div>
+    </div>
+    <div>
+      <label for="password">Password:</label>
+      <input type="password" name="password" id="password" pattern="^[A-Za-z]{1,}" required class="form-control" ngModel
+        #password="ngModel" #passwordStatus="ngModel" value="{{user.password}}">
+      <div *ngIf="password.invalid && password.dirty" class="invalid-tooltip">Use latin letters only</div>
+    </div>
+    <div>
+      <label for="phone">Phone:</label>
+      <input type="phone" name="phone" id="phone" class="form-control" ngModel value="{{user.phone}}">
+    </div>
+    <div>
+      <label for="birth">Date of birth:</label>
+      <input type="birth" name="birth" id="birth" class="form-control" ngModel value="{{user.date_of_birth}}">
+    </div>
+    <div>
+      <label for="about_me">About me:</label>
+      <input type="about_me" name="about_me" id="about_me" class="form-control" ngModel value="{{user.about_me}}">
+    </div>
+    <div>
+      <p>Roles:</p>
+      <div class="form-check">
+        <input type="checkbox" id="can_view_users" name="can_view_users" [ngModel]="user.roles.includes('can_view_users')" class="form-check-input">
+        <label for="can_view_users" class="form-check-label">Can view users</label>
+      </div>
+      <div class="form-check"> 
+        <input type="checkbox" id="can_edit_users" name="can_edit_users" ngModel class="form-check-input" [ngModel]="user.roles.includes('can_edit_users')">
+        <label for="can_edit_users" class="form-check-label">Can edit users</label>
+      </div>
+      <div class="form-check">
+        <input type="checkbox" id="can_delete_users" name="can_delete_users" ngModel class="form-check-input" [ngModel]="user.roles.includes('can_delete_users')">
+        <label for="can_delete_users" class="form-check-label">Can delete users</label>
+      </div>
+      <div class="form-check">
+        <input type="checkbox" id="can_view_details" name="can_view_details" ngModel class="form-check-input" [ngModel]="user.roles.includes('can_view_details')">
+        <label for="can_view_details" class="form-check-label">Can view details</label>
+      </div>
+      <div class="form-check">
+        <input type="checkbox" id="can_view_details_full" name="can_view_details_full" ngModel class="form-check-input" [ngModel]="user.roles.includes('can_view_details_full')">
+        <label for="can_view_details_full" class="form-check-label">Can view details full</label>
+      </div>
+      <div class="form-check">
+        <input type="checkbox" id="can_edit_users_full" name="can_edit_users_full" ngModel class="form-check-input" [ngModel]="user.roles.includes('can_edit_users_full')">
+        <label for="can_edit_users_full" class="form-check-label">Can edit users full</label>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-success">Save</button>
+  </form>
+  {{form.value|json}}
+</div>
