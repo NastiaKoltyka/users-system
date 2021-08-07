@@ -1,4 +1,7 @@
-<div class="header"> User management</div>
+<div class="header"> 
+   <p>User management</p> 
+  <div *ngIf="router.url!=='/login'">Hello,{{authService.user.name}}</div>
+</div>
 <div class="link-container">
   <div class="sideBar" *ngIf="router.url!=='/login'">
     <div [routerLink]="'/my-page'"> My page</div>

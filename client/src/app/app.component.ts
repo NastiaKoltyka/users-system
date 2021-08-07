@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { AuthService } from './auth.sevice';
+import { User } from './classes/user';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -8,5 +11,6 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'user-system';
-  constructor(public router: Router) { }
+  constructor(public router: Router, public authService: AuthService ) { 
+  }
 }
