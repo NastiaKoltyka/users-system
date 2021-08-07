@@ -47,7 +47,8 @@ export class UserEditComponent implements OnInit {
           user.roles.push(role);
         }
       });
-      this.httpService.updateUser(this.id, user).subscribe(() => {
+      this.httpService.updateUser(this.id, this.user).subscribe(() => {
+        this.router.navigate(['/users'])
         this.toastr.success('User updated successfully', 'Success!');
       },
         error => {

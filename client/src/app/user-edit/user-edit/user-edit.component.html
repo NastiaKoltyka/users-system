@@ -2,33 +2,33 @@
   <form #form="ngForm" (ngSubmit)="onSubmit(form)">
     <div>
       <label for="name">Name:</label>
-      <input type="text" name="name" id="name" required pattern="^[A-Za-z]{1,}" #name="ngModel" class="form-control"
+      <input type="text" name="name" id="name" required pattern="^[A-Za-z]{1,}" #name="ngModel" [(ngModel)]="user.name" class="form-control"
         ngModel #nameStatus="ngModel" value="{{user.name}}">
       <div *ngIf="name.invalid && name.dirty" class="invalid-tooltip">Use latin letters only</div>
     </div>
     <div>
       <label for="email">Email:</label>
       <input type="email" name="email" id="email" pattern="[A-Za-z0-9\.%№\$\-#]{1,}@[A-Za-z0-9]{1,}\.[A-Za-z0-9]{1,}"
-        #mail="ngModel" class="form-control" required ngModel #emailStatus="ngModel" value="{{user.email}}">
+        #mail="ngModel" class="form-control" required ngModel #emailStatus="ngModel" value="{{user.email}}" [(ngModel)]="user.email">
       <div *ngIf="mail.invalid && mail.dirty" class="invalid-tooltip">Wrong email adress</div>
     </div>
     <div>
       <label for="password">Password:</label>
       <input type="password" name="password" id="password" pattern="^[A-Za-z]{1,}" required class="form-control" ngModel
-        #password="ngModel" #passwordStatus="ngModel" value="{{user.password}}">
+        #password="ngModel" #passwordStatus="ngModel" value="{{user.password}}" [(ngModel)]="user.password">
       <div *ngIf="password.invalid && password.dirty" class="invalid-tooltip">Use latin letters only</div>
     </div>
     <div>
       <label for="phone">Phone:</label>
-      <input type="phone" name="phone" id="phone" class="form-control" ngModel value="{{user.phone}}">
+      <input type="phone" name="phone" id="phone" class="form-control" ngModel value="{{user.phone}}" [(ngModel)]="user.phone">
     </div>
     <div>
       <label for="birth">Date of birth:</label>
-      <input type="birth" name="birth" id="birth" class="form-control" ngModel value="{{user.date_of_birth}}">
+      <input type="birth" name="birth" id="birth" class="form-control" ngModel value="{{user.date_of_birth}}" [(ngModel)]="user.date_of_birth">
     </div>
     <div>
       <label for="about_me">About me:</label>
-      <input type="about_me" name="about_me" id="about_me" class="form-control" ngModel value="{{user.about_me}}">
+      <input type="about_me" name="about_me" id="about_me" class="form-control" ngModel value="{{user.about_me}}" [(ngModel)]="user.about_me">
     </div>
     <div>
       <p>Roles:</p>
