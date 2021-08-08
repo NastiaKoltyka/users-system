@@ -101,6 +101,58 @@ const getUser = (userId) => {
     });
 }
 
+const filterUserFields = (user) => {
+  const {
+    id,
+    name,
+    email,
+    password,
+    phone, 
+    date_of_birth,
+    about_me,
+    created_at,
+    updated_at,
+    is_admin,
+    roles,
+  } = user;
+  let plainUser = {
+    id,
+    name,
+    email,
+    password,
+    phone, 
+    date_of_birth,
+    about_me,
+    created_at,
+    updated_at,
+    is_admin,
+    roles,
+  };
+  return plainUser
+}
+
+const getUserByCredentials = (email, password) => {
+  return getConnection()
+    .then(connection => {
+      const selectSql = 'SELECT * FROM users WHERE email=? AND password=?'
+      return connection.query(selectSql, [email, password])
+        .then(selectedResult => {
+          let user = selectedResult[0][0];
+          if(!user){
+            return null;
+          }
+          return connection.query("SELECT role FROM user_roles WHERE user_id=?", user.id)
+            .then(result => {
+              connection.close()
+              user.roles = result[0].map(row => row.role);
+              return filterUserFields(user);
+            });
+        })
+    }).catch(err => {
+        return Promise.reject({code: 500, description: `Error getting user by id from the database. ${err.message}`});
+    });
+}
+
 const createUser = (user) => {
   return getConnection()
     .then(connection => {
@@ -179,5 +231,6 @@ module.exports = {
   updateUser,
   createUser,
   deleteUser,
-  getUser
+  getUser,
+  getUserByCredentials
 }

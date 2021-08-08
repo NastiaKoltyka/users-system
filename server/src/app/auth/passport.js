@@ -14,44 +14,19 @@ passport.use(new LocalStrategy({
     },
     async function (login, password, done) {
         try {
-            let users = await User.getAll();
-            for (let element of users){
-                if (login == element.email && password == element.password) {
-                    const {
-                        id,
-                        name,
-                        email,
-                        password,
-                        phone, 
-                        date_of_birth,
-                        about_me,
-                        created_at,
-                        updated_at,
-                        is_admin,
-                        roles,
-                    } = element;
-                    let user = {
-                        id,
-                        name,
-                        email,
-                        password,
-                        phone, 
-                        date_of_birth,
-                        about_me,
-                        created_at,
-                        updated_at,
-                        is_admin,
-                        roles,
-                    };
-                    return done(null, user, {
-                        message: 'Logged In Successfully'
-                    });
-                }
+            let user = await User.getUserByCredentials(login, password);
+            if(!user){
+                return done(null, false, {
+                    message: 'Incorrect email or password.'
+                });
             }
-            return done(null, false, {
-                message: 'Incorrect email or password.'
+
+            return done(null, user, {
+                message: 'Logged In Successfully'
             });
+            
         } catch (err) {
+            console.log(err);
             return done(err);
         }
     }));
