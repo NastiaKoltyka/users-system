@@ -16,7 +16,7 @@ const getConnection = () => {
       name varchar(255) not null,
       email varchar(255) not null,
       password varchar(255) not null,
-      phone int(255),
+      phone varchar(255),
       date_of_birth varchar(255),
       about_me varchar(255),
       created_at datetime not null,
@@ -71,7 +71,7 @@ const getAll = () => {
           return result[0];
         });
     }).catch(err => {
-      throw new Error(`Error getting users from the database. ${err.message}`);
+      return Promise.reject({code: 500, description: `Error getting users from the database. ${err.message}`});
     });
 };
 
@@ -82,6 +82,9 @@ const getUser = (userId) => {
       return connection.query(selectSql, [userId])
         .then(selectedResult => {
           let user = selectedResult[0][0];
+          if(!user){
+            return Promise.reject({code: 404, description: 'Specified user doesn\'t exist'});
+          }
           return connection.query("SELECT role FROM user_roles WHERE user_id=?", user.id)
             .then(result => {
               connection.close()
@@ -90,7 +93,11 @@ const getUser = (userId) => {
             });
         })
     }).catch(err => {
-      throw new Error(`Error getting user by id from the database. ${err.message}`);
+      if (err.code){
+        return Promise.reject(err);
+      } else{
+        return Promise.reject({code: 500, description: `Error getting user by id from the database. ${err.message}`});
+      }
     });
 }
 
@@ -108,7 +115,7 @@ const createUser = (user) => {
           connection.close()
           return res;
         }).catch(err => {
-          throw new Error(`Error creating user in the database. ${err.message}`);
+          return Promise.reject({ code: 500, description: `Error creating user in the database. ${err.message}`});
         });
     });
 }
@@ -118,7 +125,7 @@ const updateUser = (userId, user) => {
     .then(connection => {
       return connection.query('SELECT COUNT(*) as Count FROM users WHERE id=?', [userId]).then(checkUserResult => {
         if (checkUserResult[0][0].Count == 0) {
-          return Promise.reject('Specified user doesn\'t exist');
+          return Promise.reject({code: 404, description: 'Specified user doesn\'t exist'});
         } else {
           const sql = `UPDATE users SET name=?, email=?, password=?, phone=?, date_of_birth=?, about_me=?, updated_at=?  WHERE id=? `;
           const data = [user.name, user.email, user.password, user.phone, user.date_of_birth, user.about_me, user.updated_at, userId];
@@ -143,7 +150,11 @@ const updateUser = (userId, user) => {
         }
       });
     }).catch(err => {
-      throw new Error(`Error updating user in the database. ${err.message}`);
+      if (err.code){
+        return Promise.reject(err);
+      } else{
+        return Promise.reject({code: 500, description: `Error updating user in the database. ${err.message}`});
+      }
     });
 }
 
@@ -158,7 +169,7 @@ const deleteUser = (userId) => {
           return result[0].affectedRows;
         })
     }).catch(err => {
-      throw new Error(`Error deleting user in the database. ${err.message}`);
+      return Promise.reject({code: 500, description: `Error deleting user in the database. ${err.message}`});
     });
 }
 

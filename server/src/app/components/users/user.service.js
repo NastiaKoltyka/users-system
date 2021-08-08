@@ -50,7 +50,7 @@ const getAllUsers = (page, pageSize) => {
                 }
             };
         } catch (err) {
-            throw new Error(`Error getting all users. ${err.message}`);
+            throw new Error({code: 500, description: `Error getting all users. ${err.message}`});
         }
     });
 };
@@ -68,7 +68,7 @@ const userValidation = (newUser) => {
     };
 
     for (let prop in user) {
-        if (user.hasOwnProperty(prop) && user[prop] === undefined) {
+        if (user.hasOwnProperty(prop) && (user[prop] === undefined || user[prop] == '')) {
             return false;
         }
     }
@@ -83,7 +83,7 @@ const createUser = (newUser) => {
     try {
         const validation = userValidation(newUser);
         if (!validation) {
-            return Promise.reject();
+            return Promise.reject({code: 400, description: 'Please, fill the required user fields'});
         }
         const user = {
             name: newUser.name,
@@ -96,7 +96,7 @@ const createUser = (newUser) => {
         return User.createUser(user);
 
     } catch (err) {
-        throw new Error(`Error creating user. ${err.message}`);
+        throw new Error({code: 500, description: `Error creating user. ${err.message}`});
     }
 };
 
@@ -104,7 +104,7 @@ const updateUser = (userId, user) => {
     try {
         const validation = userValidation(user);
         if (!validation) {
-            return Promise.reject();
+            return Promise.reject({code: 400, description: 'Please, fill the required user fields'});
         }
         const updatedUser = {
             name: user.name,
@@ -118,7 +118,7 @@ const updateUser = (userId, user) => {
         };
         return User.updateUser(userId, updatedUser);
     } catch (err) {
-        throw new Error(`Error updating user. ${err.message}`);
+        throw new Error({code: 500, description: `Error updating user. ${err.message}`});
     }
 };
 

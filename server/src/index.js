@@ -23,6 +23,7 @@ const connection = mySql.createConnection({
     user: config.user,
     password: config.password
 });
+
 connection.connect(function (err) {
     if (err) {
         console.log(`Error connecting to ${config.host}`, err)
