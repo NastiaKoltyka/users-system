@@ -8,7 +8,9 @@ export class User {
     about_me:string;
     created_at:Date;
     updated_at:Date;
+    is_admin:boolean;
     roles:string[];
+    
 
     constructor(name: string, email: string, password: string) {
         this.id = 0;
@@ -20,6 +22,8 @@ export class User {
         this.about_me='';
         this.created_at= new Date;
         this.updated_at= new Date;
+        this.is_admin=false;
         this.roles=[];
+        
     }
 }

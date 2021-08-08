@@ -14,7 +14,7 @@ export class AuthService {
     user: User;
     constructor(private http: HttpClient) {
         this.token = localStorage.getItem('token') ?? '';
-        this.user = this.token.length == 0 ? new User('','','') : this.helper.decodeToken<User>(this.token);
+        this.user = this.token.length == 0 ? new User('', '', '') : this.helper.decodeToken<User>(this.token);
     }
 
     loginUser(user: Credentials): Promise<void> {
@@ -25,6 +25,9 @@ export class AuthService {
                 localStorage.setItem('token', this.token);
                 this.user = this.helper.decodeToken<User>(this.token);
             });
+    }
+    isLoggedIn() {
+        return this.token.length !== 0;
     }
 }
 

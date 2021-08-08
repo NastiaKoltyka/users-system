@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import {Router} from '@angular/router';
 
 import { User } from '../../classes/user';
+import { AuthService} from '..//../auth.sevice'
 
 @Component({
   selector: 'app-user-edit',
@@ -19,7 +20,7 @@ export class UserEditComponent implements OnInit {
   user:User;
   
   private routeSubscription: Subscription;
-  constructor(private httpService: HttpService, private route: ActivatedRoute,  private toastr: ToastrService, private router: Router) {
+  constructor(public authService: AuthService, private httpService: HttpService, private route: ActivatedRoute,  private toastr: ToastrService, private router: Router) {
     this.id = 0
     this.routeSubscription = route.params.subscribe(params => this.id = params['id']);
     this.user = new User('','','');

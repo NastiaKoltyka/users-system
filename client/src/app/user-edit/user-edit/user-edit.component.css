@@ -23,3 +23,15 @@ input[type="phone"].ng-invalid.ng-dirty {
   top: auto;
   display: block;
 }
+.btn {
+  width: 90px;
+  height: 50px;
+}
+
+.buttons {
+  width: 200px;
+  margin-top: 50px;
+  display: flex;
+  justify-content: space-between;
+}
+

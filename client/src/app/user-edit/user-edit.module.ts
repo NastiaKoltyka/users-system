@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
-
+import { EditGuard } from '../core/edit.guard';
 import { UserEditComponent } from './user-edit/user-edit.component';
 
 const routes: Routes = [
-  { path: '', component: UserEditComponent}]
+  { path: '', component: UserEditComponent, canDeactivate:[EditGuard]}]
 
 
 @NgModule({

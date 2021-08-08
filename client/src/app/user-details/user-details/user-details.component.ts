@@ -7,6 +7,7 @@ import {Router} from '@angular/router';
 
 
 import { User } from '../../classes/user';
+import { AuthService} from '..//../auth.sevice'
 
 @Component({
   selector: 'app-user-details',
@@ -18,7 +19,7 @@ export class UserDetailsComponent implements OnInit {
   id: number;
   user:User;
   private routeSubscription: Subscription;
-  constructor(private httpService: HttpService, private route: ActivatedRoute,  private toastr: ToastrService, private router: Router) {
+  constructor( public authService: AuthService, private httpService: HttpService, private route: ActivatedRoute,  private toastr: ToastrService, private router: Router) {
     this.id = 0
     this.routeSubscription = route.params.subscribe(params => this.id = params['id']);
     this.user = new User('','','');
@@ -28,7 +29,6 @@ export class UserDetailsComponent implements OnInit {
       this.httpService.getUser(this.id).subscribe((data: User) => {
         this.user = data;
         this.toastr.success(`User details loaded`, 'Success!');
-  
       }, error => {
         this.toastr.error(error.message, 'Error!');
       });
