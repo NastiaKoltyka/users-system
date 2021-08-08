@@ -14,7 +14,6 @@ export class EditGuard implements CanDeactivate<UserEditComponent> {
     currentState: RouterStateSnapshot,
     nextState?: RouterStateSnapshot):  boolean{
       console.log(component);
-      console.log(component.form)
     return confirm ('Are you shure?');
   }
 
