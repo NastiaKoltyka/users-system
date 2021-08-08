@@ -1,5 +1,5 @@
 <div class="user-content">
-  <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+  <form #form="ngForm" (ngSubmit)="onSubmit(form)" *ngIf="authService.user.roles.includes('can_edit_users')">
     <div>
       <label for="name">Name:</label>
       <input type="text" name="name" id="name" required pattern="^[A-Za-z]{1,}" #name="ngModel" class="form-control"

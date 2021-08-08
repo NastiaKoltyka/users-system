@@ -18,17 +18,20 @@ import { AuthService } from '..//../auth.sevice'
 export class UserEditComponent implements OnInit {
   id: number;
   user: User;
+  originalUser: User;
 
   private routeSubscription: Subscription;
   constructor(public authService: AuthService, private httpService: HttpService, private route: ActivatedRoute, private toastr: ToastrService, private router: Router) {
     this.id = 0
     this.routeSubscription = route.params.subscribe(params => this.id = params['id']);
     this.user = new User('', '', '');
+    this.originalUser = this.user;
   }
 
   ngOnInit(): void {
     this.httpService.getUser(this.id).subscribe((data: User) => {
       this.user = data;
+      this.originalUser = Object.assign({}, this.user); // clone user
       this.toastr.success(`User details loaded`, 'Success!');
 
     }, error => {
@@ -55,6 +58,16 @@ export class UserEditComponent implements OnInit {
       error => {
         this.toastr.error(error.error.description, 'Error!');
       });
+  }
+
+  isUserChanged():boolean{
+    return this.user.name != this.originalUser.name 
+    || this.user.email != this.originalUser.email
+    || this.user.password != this.originalUser.password
+    || this.user.phone != this.originalUser.phone
+    || this.user.date_of_birth != this.originalUser.date_of_birth
+    || this.user.about_me != this.originalUser.about_me
+    || this.user.roles.sort().toString() != this.originalUser.roles.sort().toString()
   }
 
 }

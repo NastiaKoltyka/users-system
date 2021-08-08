@@ -12,10 +12,10 @@ export class EditGuard implements CanDeactivate<UserEditComponent> {
     component: UserEditComponent,
     currentRoute: ActivatedRouteSnapshot,
     currentState: RouterStateSnapshot,
-    nextState?: RouterStateSnapshot):  boolean{
-      console.log(component);
-    return confirm ('Are you shure?');
+    nextState?: RouterStateSnapshot): boolean {
+    if (!component.isUserChanged()) {
+      return true;
+    }
+    return confirm('Are you sure?');
   }
-
-  
 }

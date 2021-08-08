@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '..//../http.sevice';
 import { User } from '../../classes/user';
 import { UserList } from 'src/app/classes/user-list';
+import { AuthService } from 'src/app/auth.sevice';
 
 
 
@@ -22,7 +23,7 @@ export class UsersComponent implements OnInit {
   pageCount: number = 0;
   collectionSize: number = 0;
   
-  constructor(private httpService: HttpService, private toastr: ToastrService) {
+  constructor(private httpService: HttpService, private toastr: ToastrService, public authService: AuthService) {
     this.refreshUsers()
   }
 

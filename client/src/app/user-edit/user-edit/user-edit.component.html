@@ -39,32 +39,32 @@
       <p>Roles:</p>
       <div class="form-check">
         <input type="checkbox" id="can_view_users" name="can_view_users"
-          [ngModel]="user.roles.includes('can_view_users')" class="form-check-input" [disabled]="!authService.user.roles.includes('can_edit_details_full')">
+          [ngModel]="user.roles.includes('can_view_users')" class="form-check-input" [disabled]="!authService.user.roles.includes('can_edit_users_full')">
         <label for="can_view_users" class="form-check-label">Can view users</label>
       </div>
       <div class="form-check">
         <input type="checkbox" id="can_edit_users" name="can_edit_users" ngModel class="form-check-input"
-          [ngModel]="user.roles.includes('can_edit_users')" [disabled]="!authService.user.roles.includes('can_edit_details_full')">
+          [ngModel]="user.roles.includes('can_edit_users')" [disabled]="!authService.user.roles.includes('can_edit_users_full')">
         <label for="can_edit_users" class="form-check-label">Can edit users</label>
       </div>
       <div class="form-check">
         <input type="checkbox" id="can_delete_users" name="can_delete_users" ngModel class="form-check-input"
-          [ngModel]="user.roles.includes('can_delete_users')" [disabled]="!authService.user.roles.includes('can_edit_details_full')">
+          [ngModel]="user.roles.includes('can_delete_users')" [disabled]="!authService.user.roles.includes('can_edit_users_full')">
         <label for="can_delete_users" class="form-check-label">Can delete users</label>
       </div>
       <div class="form-check">
         <input type="checkbox" id="can_view_details" name="can_view_details" ngModel class="form-check-input"
-          [ngModel]="user.roles.includes('can_view_details')" [disabled]="!authService.user.roles.includes('can_edit_details_full')">
+          [ngModel]="user.roles.includes('can_view_details')" [disabled]="!authService.user.roles.includes('can_edit_users_full')">
         <label for="can_view_details" class="form-check-label">Can view details</label>
       </div>
       <div class="form-check">
         <input type="checkbox" id="can_view_details_full" name="can_view_details_full" ngModel class="form-check-input"
-          [ngModel]="user.roles.includes('can_view_details_full')" [disabled]="!authService.user.roles.includes('can_edit_details_full')">
+          [ngModel]="user.roles.includes('can_view_details_full')" [disabled]="!authService.user.roles.includes('can_edit_users_full')">
         <label for="can_view_details_full" class="form-check-label">Can view details full</label>
       </div>
       <div class="form-check">
         <input type="checkbox" id="can_edit_users_full" name="can_edit_users_full" ngModel class="form-check-input"
-          [ngModel]="user.roles.includes('can_edit_users_full')" [disabled]="!authService.user.roles.includes('can_edit_details_full')">
+          [ngModel]="user.roles.includes('can_edit_users_full')" [disabled]="!authService.user.roles.includes('can_edit_users_full')">
         <label for="can_edit_users_full" class="form-check-label">Can edit users full</label>
       </div>
     </div>
