@@ -1,34 +1,36 @@
 <div class="user-details-content">
   <form #form="ngForm" (ngSubmit)="onSubmit(form)">
     <div>
-      <label for="name">Name:</label>
+      <label for="name">*Name:</label>
       <input type="text" name="name" id="name" required pattern="^[A-Za-z]{1,}" #name="ngModel" [(ngModel)]="user.name" class="form-control"
         ngModel #nameStatus="ngModel" value="{{user.name}}">
       <div *ngIf="name.invalid && name.dirty" class="invalid-tooltip">Use latin letters only</div>
     </div>
     <div>
-      <label for="email">Email:</label>
+      <label for="email">*Email:</label>
       <input type="email" name="email" id="email" pattern="[A-Za-z0-9\.%№\$\-#]{1,}@[A-Za-z0-9]{1,}\.[A-Za-z0-9]{1,}"
         #mail="ngModel" class="form-control" required ngModel #emailStatus="ngModel" value="{{user.email}}" [(ngModel)]="user.email">
       <div *ngIf="mail.invalid && mail.dirty" class="invalid-tooltip">Wrong email adress</div>
     </div>
     <div>
-      <label for="password">Password:</label>
+      <label for="password">*Password:</label>
       <input type="password" name="password" id="password" pattern="^[A-Za-z]{1,}" required class="form-control" ngModel
         #password="ngModel" #passwordStatus="ngModel" value="{{user.password}}" [(ngModel)]="user.password">
       <div *ngIf="password.invalid && password.dirty" class="invalid-tooltip">Use latin letters only</div>
     </div>
     <div>
       <label for="phone">Phone:</label>
-      <input type="phone" name="phone" id="phone" class="form-control" ngModel value="{{user.phone}}" [(ngModel)]="user.phone">
+      <input type="phone" name="phone" id="phone" class="form-control" pattern="^\+[0-9]{1,}" ngModel value="{{user.phone}}" [(ngModel)]="user.phone"
+     #phone="ngModel" #phoneStatus="ngModel">
+     <div *ngIf="phone.invalid && phone.dirty" class="invalid-tooltip">Use phone number</div>
     </div>
     <div>
       <label for="birth">Date of birth:</label>
-      <input type="birth" name="birth" id="birth" class="form-control" ngModel value="{{user.date_of_birth}}" [(ngModel)]="user.date_of_birth">
+      <input type="birth" name="birth" id="birth" class="form-control" ngModel value="{{user.date_of_birth}}" [(ngModel)]="user.date_of_birth" #birthStatus="ngModel">
     </div>
     <div>
       <label for="about_me">About me:</label>
-      <input type="about_me" name="about_me" id="about_me" class="form-control" ngModel value="{{user.about_me}}" [(ngModel)]="user.about_me">
+      <input type="about_me" name="about_me" id="about_me" class="form-control" ngModel value="{{user.about_me}}" [(ngModel)]="user.about_me" #about_me="ngModel">
     </div>
     <div>
       <p>Roles:</p>
@@ -57,7 +59,6 @@
         <label for="can_edit_users_full" class="form-check-label">Can edit users full</label>
       </div>
     </div>
-    <button type="submit" class="btn btn-success">Save</button>
+    <button type="submit" class="btn btn-success" [disabled]="nameStatus.pristine && emailStatus.pristine && passwordStatus.pristine && phoneStatus.pristine && birthStatus.pristine && about_me.pristine ||phoneStatus.invalid || nameStatus.invalid || emailStatus.invalid || passwordStatus.invalid  ">Save</button>
   </form>
-  {{form.value|json}}
 </div>

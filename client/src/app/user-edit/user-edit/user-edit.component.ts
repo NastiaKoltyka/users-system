@@ -52,7 +52,7 @@ export class UserEditComponent implements OnInit {
         this.toastr.success('User updated successfully', 'Success!');
       },
         error => {
-          this.toastr.error(error.message, 'Error!');
+          this.toastr.error(error.error.description, 'Error!');
         });
   }
 

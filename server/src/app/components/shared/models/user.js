@@ -93,7 +93,7 @@ const getUser = (userId) => {
             });
         })
     }).catch(err => {
-      if (err.code){
+      if (typeof err.code == 'number'){
         return Promise.reject(err);
       } else{
         return Promise.reject({code: 500, description: `Error getting user by id from the database. ${err.message}`});
@@ -202,7 +202,7 @@ const updateUser = (userId, user) => {
         }
       });
     }).catch(err => {
-      if (err.code){
+      if (typeof err.code == 'number'){
         return Promise.reject(err);
       } else{
         return Promise.reject({code: 500, description: `Error updating user in the database. ${err.message}`});

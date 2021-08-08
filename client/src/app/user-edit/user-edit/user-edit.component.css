@@ -1,6 +1,25 @@
 .user-details-content {
-    width: 500px;
-    margin-left: 50px;
-    min-height: calc(100vh - 100px);
-    padding-top: 20px;
-  }
+  width: 500px;
+  margin-left: 50px;
+  min-height: calc(100vh - 100px);
+  padding-top: 20px;
+}
+
+input[type="text"].ng-valid,
+input[type="password"].ng-valid,
+input[type="email"].ng-valid,
+input[type="phone"].ng-valid.ng-dirty {
+  outline: 2px solid green;
+}
+
+input[type="text"].ng-invalid.ng-dirty,
+input[type="password"].ng-invalid.ng-dirty,
+input[type="email"].ng-invalid.ng-dirty,
+input[type="phone"].ng-invalid.ng-dirty {
+  outline: 2px solid red;
+}
+
+.invalid-tooltip {
+  top: auto;
+  display: block;
+}
