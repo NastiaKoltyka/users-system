@@ -71,7 +71,10 @@ const getAll = () => {
           return result[0];
         });
     }).catch(err => {
-      return Promise.reject({code: 500, description: `Error getting users from the database. ${err.message}`});
+      return Promise.reject({
+        code: 500,
+        description: `Error getting users from the database. ${err.message}`
+      });
     });
 };
 
@@ -82,8 +85,11 @@ const getUser = (userId) => {
       return connection.query(selectSql, [userId])
         .then(selectedResult => {
           let user = selectedResult[0][0];
-          if(!user){
-            return Promise.reject({code: 404, description: 'Specified user doesn\'t exist'});
+          if (!user) {
+            return Promise.reject({
+              code: 404,
+              description: 'Specified user doesn\'t exist'
+            });
           }
           return connection.query("SELECT role FROM user_roles WHERE user_id=?", user.id)
             .then(result => {
@@ -93,10 +99,13 @@ const getUser = (userId) => {
             });
         })
     }).catch(err => {
-      if (typeof err.code == 'number'){
+      if (typeof err.code == 'number') {
         return Promise.reject(err);
-      } else{
-        return Promise.reject({code: 500, description: `Error getting user by id from the database. ${err.message}`});
+      } else {
+        return Promise.reject({
+          code: 500,
+          description: `Error getting user by id from the database. ${err.message}`
+        });
       }
     });
 }
@@ -107,7 +116,7 @@ const filterUserFields = (user) => {
     name,
     email,
     password,
-    phone, 
+    phone,
     date_of_birth,
     about_me,
     created_at,
@@ -120,7 +129,7 @@ const filterUserFields = (user) => {
     name,
     email,
     password,
-    phone, 
+    phone,
     date_of_birth,
     about_me,
     created_at,
@@ -138,7 +147,7 @@ const getUserByCredentials = (email, password) => {
       return connection.query(selectSql, [email, password])
         .then(selectedResult => {
           let user = selectedResult[0][0];
-          if(!user){
+          if (!user) {
             return null;
           }
           return connection.query("SELECT role FROM user_roles WHERE user_id=?", user.id)
@@ -149,7 +158,10 @@ const getUserByCredentials = (email, password) => {
             });
         })
     }).catch(err => {
-        return Promise.reject({code: 500, description: `Error getting user by id from the database. ${err.message}`});
+      return Promise.reject({
+        code: 500,
+        description: `Error getting user by id from the database. ${err.message}`
+      });
     });
 }
 
@@ -167,7 +179,10 @@ const createUser = (user) => {
           connection.close()
           return res;
         }).catch(err => {
-          return Promise.reject({ code: 500, description: `Error creating user in the database. ${err.message}`});
+          return Promise.reject({
+            code: 500,
+            description: `Error creating user in the database. ${err.message}`
+          });
         });
     });
 }
@@ -177,35 +192,47 @@ const updateUser = (userId, user) => {
     .then(connection => {
       return connection.query('SELECT COUNT(*) as Count FROM users WHERE id=?', [userId]).then(checkUserResult => {
         if (checkUserResult[0][0].Count == 0) {
-          return Promise.reject({code: 404, description: 'Specified user doesn\'t exist'});
+          return Promise.reject({
+            code: 404,
+            description: 'Specified user doesn\'t exist'
+          });
+          
         } else {
           const sql = `UPDATE users SET name=?, email=?, password=?, phone=?, date_of_birth=?, about_me=?, updated_at=?  WHERE id=? `;
           const data = [user.name, user.email, user.password, user.phone, user.date_of_birth, user.about_me, user.updated_at, userId];
           return connection.query(sql, data)
             .then(userResult => {
+              
               return connection.query('SELECT role FROM user_roles WHERE user_id=?', [userId]).then(rolesResult => {
                 let existingRoles = rolesResult[0].map(row => row.role);
                 let insertRoles = user.roles.filter(role => !existingRoles.includes(role)).map(role => [userId, role]);
                 let result;
                 if (insertRoles.length > 0) {
                   result = Promise.all([
-                    connection.query(`DELETE FROM user_roles WHERE user_id=? AND role NOT IN (?)`, [userId, user.roles]),
+                    connection.query(`DELETE FROM user_roles WHERE user_id=? AND role NOT IN (?)`, [userId, user.roles.length > 0 ? user.roles : ['fakeItem']]),
                     connection.query(`INSERT INTO user_roles(user_id, role) VALUES ?`, [insertRoles])
                   ])
                 } else {
-                  result = connection.query(`DELETE FROM user_roles WHERE user_id=? AND role NOT IN (?)`, [userId, user.roles]);
+                  result = connection.query(`DELETE FROM user_roles WHERE user_id=? AND role NOT IN (?)`, [userId, user.roles.length > 0 ? user.roles : ['fakeItem']]);
                 }
-                connection.close();
-                return result;
+
+                return result.then(() => {
+                  console.log('tralala')
+                  connection.close();
+                  return true;
+                });
               })
             })
         }
       });
     }).catch(err => {
-      if (typeof err.code == 'number'){
+      if (typeof err.code == 'number') {
         return Promise.reject(err);
-      } else{
-        return Promise.reject({code: 500, description: `Error updating user in the database. ${err.message}`});
+      } else {
+        return Promise.reject({
+          code: 500,
+          description: `Error updating user in the database. ${err.message}`
+        });
       }
     });
 }
@@ -221,7 +248,10 @@ const deleteUser = (userId) => {
           return result[0].affectedRows;
         })
     }).catch(err => {
-      return Promise.reject({code: 500, description: `Error deleting user in the database. ${err.message}`});
+      return Promise.reject({
+        code: 500,
+        description: `Error deleting user in the database. ${err.message}`
+      });
     });
 }
 

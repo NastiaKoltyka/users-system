@@ -7,7 +7,7 @@
   <p><b>About me:</b> {{user.about_me}}</p>
   <p><b>User created at:</b> {{user.created_at | date:'dd.MM.yyyy HH:mm'}}</p>
   <p><b>User updated at:</b> {{user.updated_at | date:'dd.MM.yyyy HH:mm'}}</p>
-  <p><b>Roles:</b> {{user.roles.join(', ')}}</p>
+  <p [hidden]="!authService.user.roles.includes('can_view_details_full') && user.id!==authService.user.id"><b>Roles:</b> {{user.roles.join(', ')}}</p>
   <div class="buttons">
     <button class="btn btn-warning" (click)="editUser()">Edit</button>
     <button class="btn btn-dark" (click)="deleteUser()" [disabled]="!authService.user.roles.includes('can_delete_users')">Delete</button>

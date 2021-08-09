@@ -2,76 +2,84 @@
   <form #form="ngForm" (ngSubmit)="onSubmit(form)">
     <div>
       <label for="name">*Name:</label>
-      <input type="text" name="name" id="name" required pattern="^[A-Za-z]{1,}" #name="ngModel" [(ngModel)]="user.name"
+      <input type="text" name="name" id="name" required pattern="^[A-Za-z]{1,}" #name="ngModel" [(ngModel)]="user.name" (ngModelChange)="somethingChanged()"
         class="form-control" ngModel #nameStatus="ngModel" value="{{user.name}}">
       <div *ngIf="name.invalid && name.dirty" class="invalid-tooltip">Use latin letters only</div>
     </div>
     <div>
       <label for="email">*Email:</label>
-      <input type="email" name="email" id="email" pattern="[A-Za-z0-9\.%№\$\-#]{1,}@[A-Za-z0-9]{1,}\.[A-Za-z0-9]{1,}"
+      <input type="email" name="email" id="email" pattern="[A-Za-z0-9\.%№\$\-#]{1,}@[A-Za-z0-9]{1,}\.[A-Za-z0-9]{1,}" (ngModelChange)="somethingChanged()"
         #mail="ngModel" class="form-control" required ngModel #emailStatus="ngModel" value="{{user.email}}"
         [(ngModel)]="user.email" disabled="true">
       <div *ngIf="mail.invalid && mail.dirty" class="invalid-tooltip">Wrong email adress</div>
     </div>
     <div>
       <label for="password">*Password:</label>
-      <input type="password" name="password" id="password" pattern="^[A-Za-z]{1,}" required class="form-control" ngModel
+      <input type="password" name="password" id="password" pattern="^[A-Za-z]{1,}" required class="form-control" ngModel (ngModelChange)="somethingChanged()"
         #password="ngModel" #passwordStatus="ngModel" value="{{user.password}}" [(ngModel)]="user.password">
       <div *ngIf="password.invalid && password.dirty" class="invalid-tooltip">Use latin letters only</div>
     </div>
     <div>
       <label for="phone">Phone:</label>
-      <input type="phone" name="phone" id="phone" class="form-control" pattern="^\+[0-9]{1,}" ngModel
+      <input type="phone" name="phone" id="phone" class="form-control" pattern="^\+[0-9]{1,}" ngModel (ngModelChange)="somethingChanged()"
         value="{{user.phone}}" [(ngModel)]="user.phone" #phone="ngModel" #phoneStatus="ngModel">
       <div *ngIf="phone.invalid && phone.dirty" class="invalid-tooltip">Use phone number</div>
     </div>
     <div>
       <label for="birth">Date of birth:</label>
-      <input type="birth" name="birth" id="birth" class="form-control" ngModel value="{{user.date_of_birth}}"
+      <input type="birth" name="birth" id="birth" class="form-control" ngModel value="{{user.date_of_birth}}" (ngModelChange)="somethingChanged()"
         [(ngModel)]="user.date_of_birth" #birthStatus="ngModel">
     </div>
     <div>
       <label for="about_me">About me:</label>
-      <input type="about_me" name="about_me" id="about_me" class="form-control" ngModel value="{{user.about_me}}"
+      <input type="about_me" name="about_me" id="about_me" class="form-control" ngModel value="{{user.about_me}}" (ngModelChange)="somethingChanged()"
         [(ngModel)]="user.about_me" #about_me="ngModel">
     </div>
     <div [hidden]="!authService.user.roles.includes('can_view_details_full')">
       <p>Roles:</p>
       <div class="form-check">
-        <input type="checkbox" id="can_view_users" name="can_view_users"
-          [ngModel]="user.roles.includes('can_view_users')" class="form-check-input" [disabled]="!authService.user.roles.includes('can_edit_users_full')">
-        <label for="can_view_users" class="form-check-label">Can view users</label>
+        <input type="checkbox" id="can_view_users" name="can_view_users" (ngModelChange)="somethingChanged()"
+          [ngModel]="user.roles.includes('can_view_users')" class="form-check-input"
+          [disabled]="!authService.user.roles.includes('can_edit_users_full')" #can_view_users="ngModel">
+        <label for="can_view_users" class="form-check-label" >Can view users</label>
       </div>
       <div class="form-check">
-        <input type="checkbox" id="can_edit_users" name="can_edit_users" ngModel class="form-check-input"
-          [ngModel]="user.roles.includes('can_edit_users')" [disabled]="!authService.user.roles.includes('can_edit_users_full')">
-        <label for="can_edit_users" class="form-check-label">Can edit users</label>
+        <input type="checkbox" id="can_edit_users" name="can_edit_users" ngModel class="form-check-input" (ngModelChange)="somethingChanged()"
+          [ngModel]="user.roles.includes('can_edit_users')"
+          [disabled]="!authService.user.roles.includes('can_edit_users_full')" #can_edit_users="ngModel">
+        <label for="can_edit_users" class="form-check-label" >Can edit users</label>
       </div>
       <div class="form-check">
-        <input type="checkbox" id="can_delete_users" name="can_delete_users" ngModel class="form-check-input"
-          [ngModel]="user.roles.includes('can_delete_users')" [disabled]="!authService.user.roles.includes('can_edit_users_full')">
-        <label for="can_delete_users" class="form-check-label">Can delete users</label>
+        <input type="checkbox" id="can_delete_users" name="can_delete_users" ngModel class="form-check-input" (ngModelChange)="somethingChanged()"
+          [ngModel]="user.roles.includes('can_delete_users')"
+          [disabled]="!authService.user.roles.includes('can_edit_users_full')" #can_delete_users="ngModel">
+        <label for="can_delete_users" class="form-check-label" >Can delete users</label>
       </div>
       <div class="form-check">
-        <input type="checkbox" id="can_view_details" name="can_view_details" ngModel class="form-check-input"
-          [ngModel]="user.roles.includes('can_view_details')" [disabled]="!authService.user.roles.includes('can_edit_users_full')">
-        <label for="can_view_details" class="form-check-label">Can view details</label>
+        <input type="checkbox" id="can_view_details" name="can_view_details" ngModel class="form-check-input" (ngModelChange)="somethingChanged()"
+          [ngModel]="user.roles.includes('can_view_details')"
+          [disabled]="!authService.user.roles.includes('can_edit_users_full')" #can_edit_users_full="ngModel">
+        <label for="can_view_details" class="form-check-label" >Can view details</label>
       </div>
       <div class="form-check">
-        <input type="checkbox" id="can_view_details_full" name="can_view_details_full" ngModel class="form-check-input"
-          [ngModel]="user.roles.includes('can_view_details_full')" [disabled]="!authService.user.roles.includes('can_edit_users_full')">
-        <label for="can_view_details_full" class="form-check-label">Can view details full</label>
+        <input type="checkbox" id="can_view_details_full" name="can_view_details_full" ngModel class="form-check-input" (ngModelChange)="somethingChanged()"
+          [ngModel]="user.roles.includes('can_view_details_full')"
+          [disabled]="!authService.user.roles.includes('can_edit_users_full') || user.is_admin==false " #can_view_details_full="ngModel">
+        <label for="can_view_details_full" class="form-check-label" >Can view details
+          full</label>
       </div>
       <div class="form-check">
-        <input type="checkbox" id="can_edit_users_full" name="can_edit_users_full" ngModel class="form-check-input"
-          [ngModel]="user.roles.includes('can_edit_users_full')" [disabled]="!authService.user.roles.includes('can_edit_users_full')">
-        <label for="can_edit_users_full" class="form-check-label">Can edit users full</label>
+        <input type="checkbox" id="can_edit_users_full" name="can_edit_users_full" ngModel class="form-check-input" (ngModelChange)="somethingChanged()"
+          [ngModel]="user.roles.includes('can_edit_users_full')"
+          [disabled]="!authService.user.roles.includes('can_edit_users_full') || user.is_admin==false " #can_edit_users_full="ngModel">
+        <label for="can_edit_users_full" class="form-check-label" >Can edit users
+          full</label>
       </div>
     </div>
-    <div class="buttons" >
+    <div class="buttons">
       <button type="submit" class="btn btn-success"
-        [disabled]="nameStatus.pristine && emailStatus.pristine && passwordStatus.pristine && phoneStatus.pristine && birthStatus.pristine && about_me.pristine ||phoneStatus.invalid || nameStatus.invalid || emailStatus.invalid || passwordStatus.invalid  ">Save</button>
-      <button class="btn btn-dark" [routerLink]="['/users', user.id]" >Back</button>
+        [disabled]="!isUserChanged">Save</button>
+      <button class="btn btn-dark" [routerLink]="['/users', user.id]">Back</button>
     </div>
   </form>
 </div>
